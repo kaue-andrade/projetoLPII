@@ -84,7 +84,7 @@ public class LivroDAO {
                comando.setInt(3, livro.getPaginas());
                comando.setString(4, livro.getAutores());
                comando.setDouble(5, livro.getPreco());
-               comando.setInt(4, livro.getId());
+               comando.setInt(6, livro.getId());
                
                comando.executeUpdate();
                
