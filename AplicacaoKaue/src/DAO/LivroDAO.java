@@ -92,4 +92,36 @@ public class LivroDAO {
            }
     
     }
+    
+    public Livro pesquisar (Livro livro) throws SQLException{
+    
+        try (Connection conexao = bd.conectar();
+            PreparedStatement comando = conexao.prepareStatement(
+            "SELECT titulo, ano, paginas, autores, preco FROM livro WHERE id= ?"
+            
+            ))
+        {
+        
+            comando.setInt(1, livro.getId());
+            ResultSet tabela = comando.executeQuery();
+            
+            boolean existeLivro = false;
+            
+            if (tabela.next()){
+                livro.setId(tabela.getInt("id"));
+                livro.setTitulo(tabela.getString("titulo"));
+                livro.setAno(tabela.getInt("ano"));
+                livro.setPaginas(tabela.getInt("paginas"));
+                livro.setAutores(tabela.getString("autores"));
+                livro.setPreco(tabela.getDouble("preco"));
+            
+                existeLivro = true;
+            }
+            
+            if(!existeLivro){
+                livro.setId(0);
+            }
+        }    
+           return livro;
+    }
 }
